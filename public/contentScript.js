@@ -17,6 +17,7 @@ function getCompanyElementFromDetailPage() {
 // Helper: highlight element
 function highlightAppliedCompany(el, createdAt) {
   const createdAtEl = document.createElement('span');
+  createdAtEl.className = 'my-created-at';
   const date = new Date(createdAt);
   const formattedDate = date.toLocaleDateString('en-US', {
     month: 'short',
@@ -44,6 +45,7 @@ function highlightMatchingCompanies(notesObj, elements) {
   }));
   const noteNames = notes.map(n => n.companyName?.toLowerCase().trim()).filter(Boolean);
   (elements || getCompanyElements()).forEach(el => {
+    Array.from(el.querySelectorAll('.my-created-at')).forEach(span => span.remove());
     const company = el.textContent.trim().toLowerCase();
     if (noteNames.includes(company)) {
       const matched = notes.find(n => n.companyName?.toLowerCase().trim() === company);
@@ -65,9 +67,16 @@ function getCompanyElementsFromNode(node) {
   ];
 }
 
+let globalNotes = {};
+let observer = null;
+
 function observeAndHighlight(notesObj) {
-  const observer = new MutationObserver(mutations => {
+  globalNotes = notesObj;
+
+  if (observer) observer.disconnect();
+  observer = new MutationObserver(mutations => {
     observer.disconnect();
+
     let shouldInsertButton = false;
     for (const mutation of mutations) {
       for (const node of mutation.addedNodes) {
@@ -84,18 +93,20 @@ function observeAndHighlight(notesObj) {
     if (shouldInsertButton) {
       const companyElement = getCompanyElementFromDetailPage();
       const companyName = companyElement?.textContent.trim().toLowerCase();
-      const note = notesObj[companyName] || null;
+      const note = globalNotes[companyName] || null;
       insertCustomButton(note ? { companyName, ...note } : null, companyName);
     }
-    highlightMatchingCompanies(notesObj);
+    highlightMatchingCompanies(globalNotes);
     observer.observe(document.body, { childList: true, subtree: true });
   });
+
   observer.observe(document.body, { childList: true, subtree: true });
+
   // initial run
-  highlightMatchingCompanies(notesObj);
+  highlightMatchingCompanies(globalNotes);
   const companyElement = getCompanyElementFromDetailPage();
   const companyName = companyElement?.textContent.trim().toLowerCase();
-  const note = notesObj[companyName] || null;
+  const note = globalNotes[companyName] || null;
   insertCustomButton(note ? { companyName, ...note } : null, companyName);
 }
 
@@ -107,14 +118,14 @@ function insertCustomButton(existingNote, companyName) {
     // if the note exists, show the update note button and delete note button
     if (existingNote) {
       const updateBtn = document.createElement('button');
-      updateBtn.textContent = 'Update';
+      updateBtn.textContent = 'Update Note';
       updateBtn.className = 'my-custom-btn artdeco-button artdeco-button--secondary';
       updateBtn.style.marginLeft = '8px';
       updateBtn.onclick = () => updateNote(existingNote.companyName, { createdAt: new Date().toISOString() });
       actionBar.appendChild(updateBtn);
 
       const deleteBtn = document.createElement('button');
-      deleteBtn.textContent = 'Delete';
+      deleteBtn.textContent = 'Delete Note';
       deleteBtn.className = 'my-custom-btn artdeco-button artdeco-button--secondary';
       deleteBtn.style.marginLeft = '8px';
       deleteBtn.onclick = () => deleteNote(existingNote.companyName);
@@ -160,7 +171,9 @@ function deleteNote(companyName) {
   chrome.storage.local.get(['jobNotes'], (result) => {
     const notes = result.jobNotes || {};
     delete notes[companyName];
-    chrome.storage.local.set({ jobNotes: notes });
+    chrome.storage.local.set({ jobNotes: notes }, () => {
+      observeAndHighlight(notes);
+    });
   });
 }
 
@@ -168,6 +181,8 @@ function updateNote(companyName, note) {
   chrome.storage.local.get(['jobNotes'], (result) => {
     const notes = result.jobNotes || {};
     notes[companyName] = note;
-    chrome.storage.local.set({ jobNotes: notes });
+    chrome.storage.local.set({ jobNotes: notes }, () => {
+      observeAndHighlight(notes);
+    });
   });
 }
