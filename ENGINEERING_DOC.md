@@ -6,6 +6,10 @@ This Chrome Extension empowers users to efficiently collect and manage job-relat
 
 ---
 
+## Tech Stack
+Frontend: React.js
+Serverless services (AWS): Cognito + AWS Lambda + API Gateway + DynamoDB
+
 ## Goals
 
 1. **Page Activation**  

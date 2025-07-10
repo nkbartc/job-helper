@@ -57,69 +57,63 @@ function getCompanyElementsFromNode(node) {
     ...node.matches && node.matches('.artdeco-entity-lockup__subtitle > div[dir=\"ltr\"]') ? [node] : [],
     ...node.querySelectorAll ? [
       ...node.querySelectorAll('.artdeco-entity-lockup__subtitle > div[dir=\"ltr\"]'),
-      ...node.querySelectorAll('.base-search-card__subtitle'),
-      ...node.querySelectorAll('.topcard__org-name-link'),
-      ...node.querySelectorAll('.topcard__flavor')
+      // ...node.querySelectorAll('.base-search-card__subtitle'),
+      // ...node.querySelectorAll('.topcard__org-name-link'),
+      // ...node.querySelectorAll('.topcard__flavor')
     ] : []
   ];
 }
 
 function observeAndHighlight(notes) {
   const observer = new MutationObserver(mutations => {
-    let newElements = [];
+    observer.disconnect();
+    let shouldInsertButton = false;
     for (const mutation of mutations) {
       for (const node of mutation.addedNodes) {
         if (node.nodeType === 1) {
-          newElements = newElements.concat(getCompanyElementsFromNode(node));
+          if (node.matches && node.matches('.mt4 .display-flex')) {
+            shouldInsertButton = true;
+          }
+          if (node.querySelector && node.querySelector('.mt4 .display-flex')) {
+            shouldInsertButton = true;
+          }
         }
       }
     }
-    if (newElements.length) {
-      highlightMatchingCompanies(notes, newElements);
-    }
 
-    // try to highlight detail page's company name
-    const companyElement = getCompanyElementFromDetailPage();
-    const existingNote = notes.find(
-      n =>
-        n.companyName?.toLowerCase().trim() ===
-        companyElement.textContent.trim().toLowerCase()
-    );
-    if (
-      companyElement &&
-      existingNote
-    ) {
-      highlightAppliedCompany(
-        companyElement,
-        existingNote.createdAt
+    if (shouldInsertButton) {
+      const companyElement = getCompanyElementFromDetailPage();
+      const existingNote = notes.find(
+        n =>
+          n.companyName?.toLowerCase().trim() ===
+          companyElement?.textContent.trim().toLowerCase()
       );
+      insertCustomButton(existingNote);
     }
 
-    insertCustomButton(existingNote);
+    highlightMatchingCompanies(notes);
+
+    observer.observe(document.body, { childList: true, subtree: true });
   });
 
   observer.observe(document.body, { childList: true, subtree: true });
 
-  // initial highlight detail page's company name
+  // initial run
   highlightMatchingCompanies(notes);
   const companyElement = getCompanyElementFromDetailPage();
   const existingNote = notes.find(
     n =>
       n.companyName?.toLowerCase().trim() ===
-      companyElement.textContent.trim().toLowerCase()
+      companyElement?.textContent.trim().toLowerCase()
   );
-  if (companyElement && existingNote) {
-    highlightAppliedCompany(
-      companyElement,
-      existingNote.createdAt
-    );
-  }
   insertCustomButton(existingNote);
 }
 
 function insertCustomButton(existingNote) {
   const actionBar = document.querySelector('.mt4 .display-flex');
-  if (actionBar && !actionBar.querySelector('.my-custom-btn')) {
+  if (actionBar) {
+    // always remove all old custom buttons
+    actionBar.querySelectorAll('.my-custom-btn').forEach(btn => btn.remove());
     // if the note exists, show the update note button and delete note button
     if (existingNote) {
       const updateBtn = document.createElement('button');
