@@ -26,12 +26,13 @@ function highlightAppliedCompany(el, createdAt) {
     minute: '2-digit'
   });
   createdAtEl.textContent = `Applied on ${formattedDate}`;
-  createdAtEl.style.fontSize = '12px';
-  createdAtEl.style.color = '#6c757d';
+  createdAtEl.style.fontSize = '1.4rem';
+  createdAtEl.style.color = 'red';
   createdAtEl.style.display = 'block';
   createdAtEl.style.width = 'fit-content';
   createdAtEl.style.marginTop = '2px';
-  createdAtEl.style.backgroundColor = '#d4edda';
+  createdAtEl.style.fontWeight = 'bold';
+  // createdAtEl.style.backgroundColor = '#d4edda';
   el.appendChild(createdAtEl);
 }
 
