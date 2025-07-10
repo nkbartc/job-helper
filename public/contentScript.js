@@ -37,16 +37,17 @@ function highlightAppliedCompany(el, createdAt) {
 }
 
 // highlight company names based on notes
-function highlightMatchingCompanies(notes, elements) {
-  const noteNames = notes
-    .map(n => (n.companyName ? n.companyName.toLowerCase().trim() : null))
-    .filter(Boolean);
-
+function highlightMatchingCompanies(notesObj, elements) {
+  const notes = Object.entries(notesObj).map(([companyName, value]) => ({
+    companyName,
+    createdAt: value.createdAt
+  }));
+  const noteNames = notes.map(n => n.companyName?.toLowerCase().trim()).filter(Boolean);
   (elements || getCompanyElements()).forEach(el => {
     const company = el.textContent.trim().toLowerCase();
     if (noteNames.includes(company)) {
-      const existingNote = notes.find(n => n.companyName?.toLowerCase().trim() === company);
-      highlightAppliedCompany(el, existingNote.createdAt);
+      const matched = notes.find(n => n.companyName?.toLowerCase().trim() === company);
+      highlightAppliedCompany(el, matched?.createdAt);
     }
   });
 }
@@ -64,7 +65,7 @@ function getCompanyElementsFromNode(node) {
   ];
 }
 
-function observeAndHighlight(notes) {
+function observeAndHighlight(notesObj) {
   const observer = new MutationObserver(mutations => {
     observer.disconnect();
     let shouldInsertButton = false;
@@ -80,36 +81,25 @@ function observeAndHighlight(notes) {
         }
       }
     }
-
     if (shouldInsertButton) {
       const companyElement = getCompanyElementFromDetailPage();
-      const existingNote = notes.find(
-        n =>
-          n.companyName?.toLowerCase().trim() ===
-          companyElement?.textContent.trim().toLowerCase()
-      );
-      insertCustomButton(existingNote);
+      const companyName = companyElement?.textContent.trim().toLowerCase();
+      const note = notesObj[companyName] || null;
+      insertCustomButton(note ? { companyName, ...note } : null, companyName);
     }
-
-    highlightMatchingCompanies(notes);
-
+    highlightMatchingCompanies(notesObj);
     observer.observe(document.body, { childList: true, subtree: true });
   });
-
   observer.observe(document.body, { childList: true, subtree: true });
-
   // initial run
-  highlightMatchingCompanies(notes);
+  highlightMatchingCompanies(notesObj);
   const companyElement = getCompanyElementFromDetailPage();
-  const existingNote = notes.find(
-    n =>
-      n.companyName?.toLowerCase().trim() ===
-      companyElement?.textContent.trim().toLowerCase()
-  );
-  insertCustomButton(existingNote);
+  const companyName = companyElement?.textContent.trim().toLowerCase();
+  const note = notesObj[companyName] || null;
+  insertCustomButton(note ? { companyName, ...note } : null, companyName);
 }
 
-function insertCustomButton(existingNote) {
+function insertCustomButton(existingNote, companyName) {
   const actionBar = document.querySelector('.mt4 .display-flex');
   if (actionBar) {
     // always remove all old custom buttons
@@ -120,14 +110,14 @@ function insertCustomButton(existingNote) {
       updateBtn.textContent = 'Update';
       updateBtn.className = 'my-custom-btn artdeco-button artdeco-button--secondary';
       updateBtn.style.marginLeft = '8px';
-      updateBtn.onclick = () => alert('Clicked!');
+      updateBtn.onclick = () => updateNote(existingNote.companyName, { createdAt: new Date().toISOString() });
       actionBar.appendChild(updateBtn);
 
       const deleteBtn = document.createElement('button');
       deleteBtn.textContent = 'Delete';
       deleteBtn.className = 'my-custom-btn artdeco-button artdeco-button--secondary';
       deleteBtn.style.marginLeft = '8px';
-      deleteBtn.onclick = () => alert('Clicked!');
+      deleteBtn.onclick = () => deleteNote(existingNote.companyName);
       actionBar.appendChild(deleteBtn);
     }
 
@@ -137,7 +127,7 @@ function insertCustomButton(existingNote) {
       addBtn.textContent = 'Add Note';
       addBtn.className = 'my-custom-btn artdeco-button artdeco-button--secondary';
       addBtn.style.marginLeft = '8px';
-      addBtn.onclick = () => alert('Clicked!');
+      addBtn.onclick = () => updateNote(companyName, { createdAt: new Date().toISOString() });
       actionBar.appendChild(addBtn);
     }
 
@@ -152,7 +142,7 @@ function insertCustomButton(existingNote) {
 
 // initial highlight with observer
 chrome.storage.local.get(['jobNotes'], (result) => {
-  const notes = result.jobNotes || [];
+  const notes = result.jobNotes || {};
   observeAndHighlight(notes);
 });
 
@@ -160,8 +150,24 @@ chrome.storage.local.get(['jobNotes'], (result) => {
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === 'ADD_JOB_NOTE' && msg.payload) {
     chrome.storage.local.get(['jobNotes'], (result) => {
-      const notes = result.jobNotes || [];
+      const notes = result.jobNotes || {};
       highlightMatchingCompanies(notes);
     });
   }
 }); 
+
+function deleteNote(companyName) {
+  chrome.storage.local.get(['jobNotes'], (result) => {
+    const notes = result.jobNotes || {};
+    delete notes[companyName];
+    chrome.storage.local.set({ jobNotes: notes });
+  });
+}
+
+function updateNote(companyName, note) {
+  chrome.storage.local.get(['jobNotes'], (result) => {
+    const notes = result.jobNotes || {};
+    notes[companyName] = note;
+    chrome.storage.local.set({ jobNotes: notes });
+  });
+}

@@ -16,8 +16,9 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     };
     // Save to chrome.storage.local
     chrome.storage.local.get(['jobNotes'], (result) => {
-      const notes = result.jobNotes || [];
-      notes.push(note);
+      const notes = result.jobNotes || {};
+      const normalizedCompanyName = note.companyName.trim().toLowerCase();
+      notes[normalizedCompanyName] = { createdAt: note.createdAt };
       chrome.storage.local.set({ jobNotes: notes });
     });
     // Send message to content script or Redux (handled later)
