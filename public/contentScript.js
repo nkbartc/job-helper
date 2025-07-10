@@ -5,17 +5,20 @@ function getCompanyElements() {
   ];
 }
 
+// Helper: get company name element from detail page
+function getCompanyElementFromDetailPage() {
+  // if there's a link, return the link
+  const el = document.querySelector('.job-details-jobs-unified-top-card__company-name > a');
+  if (el) return el;
+  // if there's no link, return the div itself
+  return document.querySelector('.job-details-jobs-unified-top-card__company-name');
+}
+
 // Helper: highlight element
 function highlightAppliedCompany(el, createdAt) {
-  if (el.dataset.highlighted) return; // prevent duplicate highlight
-  el.style.backgroundColor = '#d4edda';
-  el.style.borderRadius = '4px';
-  el.style.padding = '2px 4px';
-  el.dataset.highlighted = 'true';
-  // add createdAt to the element
   const createdAtEl = document.createElement('span');
-  const date = new Date(createdAt); // convert to date object
-  const formattedDate = date.toLocaleDateString('en-US', { // format date and time
+  const date = new Date(createdAt);
+  const formattedDate = date.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
@@ -25,7 +28,10 @@ function highlightAppliedCompany(el, createdAt) {
   createdAtEl.textContent = `Applied on ${formattedDate}`;
   createdAtEl.style.fontSize = '12px';
   createdAtEl.style.color = '#6c757d';
-  createdAtEl.style.marginLeft = '4px';
+  createdAtEl.style.display = 'block';
+  createdAtEl.style.width = 'fit-content';
+  createdAtEl.style.marginTop = '2px';
+  createdAtEl.style.backgroundColor = '#d4edda';
   el.appendChild(createdAtEl);
 }
 
@@ -38,7 +44,8 @@ function highlightMatchingCompanies(notes, elements) {
   (elements || getCompanyElements()).forEach(el => {
     const company = el.textContent.trim().toLowerCase();
     if (noteNames.includes(company)) {
-      highlightAppliedCompany(el, notes.find(n => n.companyName?.toLowerCase().trim() === company)?.createdAt);
+      const existingNote = notes.find(n => n.companyName?.toLowerCase().trim() === company);
+      highlightAppliedCompany(el, existingNote.createdAt);
     }
   });
 }
@@ -69,9 +76,83 @@ function observeAndHighlight(notes) {
     if (newElements.length) {
       highlightMatchingCompanies(notes, newElements);
     }
+
+    // try to highlight detail page's company name
+    const companyElement = getCompanyElementFromDetailPage();
+    const existingNote = notes.find(
+      n =>
+        n.companyName?.toLowerCase().trim() ===
+        companyElement.textContent.trim().toLowerCase()
+    );
+    if (
+      companyElement &&
+      existingNote
+    ) {
+      highlightAppliedCompany(
+        companyElement,
+        existingNote.createdAt
+      );
+    }
+
+    insertCustomButton(existingNote);
   });
+
   observer.observe(document.body, { childList: true, subtree: true });
-  highlightMatchingCompanies(notes); // Initial run
+
+  // initial highlight detail page's company name
+  highlightMatchingCompanies(notes);
+  const companyElement = getCompanyElementFromDetailPage();
+  const existingNote = notes.find(
+    n =>
+      n.companyName?.toLowerCase().trim() ===
+      companyElement.textContent.trim().toLowerCase()
+  );
+  if (companyElement && existingNote) {
+    highlightAppliedCompany(
+      companyElement,
+      existingNote.createdAt
+    );
+  }
+  insertCustomButton(existingNote);
+}
+
+function insertCustomButton(existingNote) {
+  const actionBar = document.querySelector('.mt4 .display-flex');
+  if (actionBar && !actionBar.querySelector('.my-custom-btn')) {
+    // if the note exists, show the update note button and delete note button
+    if (existingNote) {
+      const updateBtn = document.createElement('button');
+      updateBtn.textContent = 'Update';
+      updateBtn.className = 'my-custom-btn artdeco-button artdeco-button--secondary';
+      updateBtn.style.marginLeft = '8px';
+      updateBtn.onclick = () => alert('Clicked!');
+      actionBar.appendChild(updateBtn);
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = 'Delete';
+      deleteBtn.className = 'my-custom-btn artdeco-button artdeco-button--secondary';
+      deleteBtn.style.marginLeft = '8px';
+      deleteBtn.onclick = () => alert('Clicked!');
+      actionBar.appendChild(deleteBtn);
+    }
+
+    // if the note does not exist, show the add note button
+    else {
+      const addBtn = document.createElement('button');
+      addBtn.textContent = 'Add Note';
+      addBtn.className = 'my-custom-btn artdeco-button artdeco-button--secondary';
+      addBtn.style.marginLeft = '8px';
+      addBtn.onclick = () => alert('Clicked!');
+      actionBar.appendChild(addBtn);
+    }
+
+    // const myBtn = document.createElement('button');
+    // myBtn.textContent = 'My Custom Action';
+    // myBtn.className = 'my-custom-btn artdeco-button artdeco-button--secondary';
+    // myBtn.style.marginLeft = '8px';
+    // myBtn.onclick = () => alert('Clicked!');
+    // actionBar.appendChild(myBtn);
+  }
 }
 
 // initial highlight with observer
