@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "LinkedIn Job Notes Saver",
+  "name": "Job Notes Saver",
   "version": "1.0.0",
-  "description": "Save selected text from LinkedIn Jobs to localStorage and highlight matching company names.",
+  "description": "Save selected text to localStorage and highlight matching company names.",
   "permissions": [
     "contextMenus",
     "storage",
