@@ -16,6 +16,7 @@
     "service_worker": "background.js"
   },
   "action": {
-    "default_title": "Job Notes Saver"
+    "default_title": "Job Notes Saver",
+    "default_popup": "index.html"
   }
 }

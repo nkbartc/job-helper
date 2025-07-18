@@ -5,6 +5,23 @@ All notable changes to the Job Notes Saver Chrome Extension will be documented i
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2024-12-19
+
+### Added
+- Popup UI with React-based interface
+- Navigation sidebar with Notes tab
+- Notes table displaying all saved job notes
+- Delete functionality directly from popup
+- Responsive design with Bootstrap styling
+- Loading states and empty state handling
+
+### Features
+- Click extension icon to open popup panel
+- View all saved notes in a table format
+- Delete notes directly from the popup
+- Real-time data synchronization with storage
+- Clean and modern UI design
+
 ## [1.0.0] - 2024-12-19
 
 ### Added
