@@ -97,7 +97,7 @@ const NotesTable: React.FC<NotesTableProps> = ({ notes, loading, onDeleteNote })
       {filteredNotes.length > 0 && (
         <div className="table-container">
           <Table striped hover responsive>
-            <thead className="table-dark">
+            <thead className="table-light">
               <tr>
                 <th>Company Name</th>
                 <th style={{ whiteSpace: 'nowrap', minWidth: '140px' }}>Created At</th>
@@ -109,7 +109,7 @@ const NotesTable: React.FC<NotesTableProps> = ({ notes, loading, onDeleteNote })
               {filteredNotes.map((note, index) => (
                 <tr key={index}>
                   <td>
-                    <strong>{note.companyName}</strong>
+                    <strong style={{ color: '#0a66c2' }}>{note.companyName}</strong>
                   </td>
                   <td style={{ whiteSpace: 'nowrap' }}>{formatDate(note.createdAt)}</td>
                   <td>{note.note || 'No note'}</td>

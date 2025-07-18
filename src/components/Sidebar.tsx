@@ -17,7 +17,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
           onClick={() => onTabChange('notes')}
           style={{
             color: activeTab === 'notes' ? 'white' : '#495057',
-            backgroundColor: activeTab === 'notes' ? '#0d6efd' : 'transparent',
+            backgroundColor: activeTab === 'notes' ? '#0a66c2' : 'transparent',
             border: 'none',
             width: '100%',
             textAlign: 'left',
@@ -43,7 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
           onClick={() => onTabChange('about')}
           style={{
             color: activeTab === 'about' ? 'white' : '#495057',
-            backgroundColor: activeTab === 'about' ? '#0d6efd' : 'transparent',
+            backgroundColor: activeTab === 'about' ? '#0a66c2' : 'transparent',
             border: 'none',
             width: '100%',
             textAlign: 'left',
