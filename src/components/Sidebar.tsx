@@ -15,12 +15,52 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
         <button
           className={`nav-link ${activeTab === 'notes' ? 'active' : ''}`}
           onClick={() => onTabChange('notes')}
+          style={{
+            color: activeTab === 'notes' ? 'white' : '#495057',
+            backgroundColor: activeTab === 'notes' ? '#0d6efd' : 'transparent',
+            border: 'none',
+            width: '100%',
+            textAlign: 'left',
+            padding: '10px 15px'
+          }}
+          onFocus={(e) => {
+            if (activeTab !== 'notes') {
+              e.target.style.backgroundColor = '#e9ecef';
+              e.target.style.color = '#495057';
+            }
+          }}
+          onBlur={(e) => {
+            if (activeTab !== 'notes') {
+              e.target.style.backgroundColor = 'transparent';
+              e.target.style.color = '#495057';
+            }
+          }}
         >
           📝 Notes
         </button>
         <button
           className={`nav-link ${activeTab === 'about' ? 'active' : ''}`}
           onClick={() => onTabChange('about')}
+          style={{
+            color: activeTab === 'about' ? 'white' : '#495057',
+            backgroundColor: activeTab === 'about' ? '#0d6efd' : 'transparent',
+            border: 'none',
+            width: '100%',
+            textAlign: 'left',
+            padding: '10px 15px'
+          }}
+          onFocus={(e) => {
+            if (activeTab !== 'about') {
+              e.target.style.backgroundColor = '#e9ecef';
+              e.target.style.color = '#495057';
+            }
+          }}
+          onBlur={(e) => {
+            if (activeTab !== 'about') {
+              e.target.style.backgroundColor = 'transparent';
+              e.target.style.color = '#495057';
+            }
+          }}
         >
           ℹ️ About
         </button>
