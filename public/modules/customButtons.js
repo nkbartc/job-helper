@@ -9,7 +9,7 @@ if (typeof insertCustomButton === 'undefined') {
       // If the note exists, show the update note button and delete note button
       if (existingNote) {
         const updateBtn = document.createElement('button');
-        updateBtn.textContent = 'Update Note';
+        updateBtn.textContent = 'Update Applied Time';
         updateBtn.className = 'my-custom-btn artdeco-button artdeco-button--secondary';
         updateBtn.style.marginLeft = '8px';
         updateBtn.onclick = () => updateNote(existingNote.companyName, { createdAt: new Date().toISOString() });
@@ -25,7 +25,7 @@ if (typeof insertCustomButton === 'undefined') {
       // If the note does not exist, show the add note button
       else {
         const addBtn = document.createElement('button');
-        addBtn.textContent = 'Add Note';
+        addBtn.textContent = 'Add Applied Time';
         addBtn.className = 'my-custom-btn artdeco-button artdeco-button--secondary';
         addBtn.style.marginLeft = '8px';
         addBtn.onclick = () => updateNote(companyName, { createdAt: new Date().toISOString() });
