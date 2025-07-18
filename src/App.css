@@ -36,6 +36,7 @@
 }
 
 .table-container {
-  max-height: 500px;
+  max-height: 450px; /* Reduced from 500px to account for search bar and padding */
   overflow-y: auto;
+  padding-bottom: 10px; /* Add padding to ensure last row is fully visible */
 }
