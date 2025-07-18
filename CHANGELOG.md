@@ -5,7 +5,7 @@ All notable changes to the Job Notes Saver Chrome Extension will be documented i
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.0] - 2024-12-19
+## [0.2.0] - 2025-07-17
 
 ### Added
 - Popup UI with React-based interface
@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Real-time data synchronization with storage
 - Clean and modern UI design
 
-## [1.0.0] - 2024-12-19
+## [0.1.0] - 2025-07-10
 
 ### Added
 - Initial Chrome Extension setup with React 18 + TypeScript + Redux + React Bootstrap + React Icons
