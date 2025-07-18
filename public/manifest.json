@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Job Notes Saver",
   "version": "1.0.0",
-  "description": "Save selected text to localStorage and highlight matching company names.",
+  "description": "Save and highlight job-related notes from job search websites.",
   "permissions": [
     "contextMenus",
     "storage",
@@ -19,7 +19,13 @@
       "matches": [
         "https://www.linkedin.com/jobs/*"
       ],
-      "js": ["contentScript.js"],
+      "js": [
+        "modules/storageManager.js",
+        "modules/companyHighlight.js", 
+        "modules/customButtons.js",
+        "modules/observerManager.js",
+        "contentScript.js"
+      ],
       "run_at": "document_idle"
     }
   ],
