@@ -29,7 +29,7 @@ const Popup: React.FC = () => {
   };
 
   return (
-    <div className="d-flex h-100">
+    <div className="d-flex h-100" style={{ overflow: 'hidden' }}>
       <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
       <div className="main-content">
         {renderContent()}

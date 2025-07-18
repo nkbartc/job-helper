@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - About section with author information
 - LinkedIn profile link for Bart Chou
 - Enhanced navigation with About tab
+- Search by company name in Notes section
 
 ### Features
 - Click extension icon to open popup panel
