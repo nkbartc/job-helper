@@ -37,11 +37,11 @@ jobs:
           zip -r ../extension.zip . -x '*.map' '*.txt' 'robots.txt'
 
       - name: Upload to Chrome Web Store
-        uses: PlasmoHQ/chrome-upload-action@v1
+        uses: mnao305/chrome-extension-upload@v5.0.0
         with:
-          client_id: ${{ secrets.CLIENT_ID }}
-          client_secret: ${{ secrets.CLIENT_SECRET }}
-          refresh_token: ${{ secrets.REFRESH_TOKEN }}
-          extension_id: ${{ secrets.EXTENSION_ID }}
-          zip_path: extension.zip
+          file-path: extension.zip
+          extension-id: ${{ secrets.EXTENSION_ID }}
+          client-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+          refresh-token: ${{ secrets.REFRESH_TOKEN }}
           publish: false
