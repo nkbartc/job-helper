@@ -1,7 +1,12 @@
 // Custom button functionality
 if (typeof insertCustomButton === 'undefined') {
   function insertCustomButton(existingNote, companyName) {
-    const actionBar = document.querySelector('.mt4 .display-flex');
+    // Check if we're on LinkedIn Jobs search page
+    if (!window.location.href.includes('linkedin.com/jobs/search')) {
+      return;
+    }
+    
+    const actionBar = document.querySelector('.mt4 > .display-flex');
     if (actionBar) {
       // Always remove all old custom buttons
       actionBar.querySelectorAll('.my-custom-btn').forEach(btn => btn.remove());

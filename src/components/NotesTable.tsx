@@ -100,7 +100,7 @@ const NotesTable: React.FC<NotesTableProps> = ({ notes, loading, onDeleteNote })
             <thead className="table-light">
               <tr>
                 <th>Company Name</th>
-                <th style={{ whiteSpace: 'nowrap', minWidth: '140px' }}>Created At</th>
+                <th style={{ whiteSpace: 'nowrap', minWidth: '140px' }}>Applied At</th>
                 <th>Note</th>
                 <th style={{ whiteSpace: 'nowrap', minWidth: '80px' }}>Actions</th>
               </tr>
