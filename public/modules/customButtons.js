@@ -36,6 +36,45 @@ if (typeof insertCustomButton === 'undefined') {
         addBtn.onclick = () => updateNote(companyName, { createdAt: new Date().toISOString() });
         actionBar.appendChild(addBtn);
       }
+
+      // Add a button to hide/unhide the company
+      const hideBtn = document.createElement('button');
+      hideBtn.className = 'my-custom-btn artdeco-button artdeco-button--secondary';
+      hideBtn.style.marginLeft = '8px';
+      
+      // Function to set up hide functionality
+      const setupHideButton = () => {
+        hideBtn.textContent = 'Hide Company';
+        hideBtn.onclick = () => {
+          const reason = prompt('Why do you want to hide this company?', 'Not interested');
+          if (reason !== null) {
+            hideCompany(companyName, reason).then(() => {
+              setupUnhideButton();
+            });
+          }
+        };
+      };
+      
+      // Function to set up unhide functionality
+      const setupUnhideButton = () => {
+        hideBtn.textContent = 'Unhide Company';
+        hideBtn.onclick = () => {
+          unhideCompany(companyName).then(() => {
+            setupHideButton();
+          });
+        };
+      };
+      
+      // Check current state and set up button accordingly
+      isCompanyHidden(companyName).then(isHidden => {
+        if (isHidden) {
+          setupUnhideButton();
+        } else {
+          setupHideButton();
+        }
+      });
+      
+      actionBar.appendChild(hideBtn);
     }
   }
 } 

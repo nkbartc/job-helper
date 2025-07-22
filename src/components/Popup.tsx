@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import NotesTable from './NotesTable';
 import AboutSection from './AboutSection';
+import HiddenCompaniesTable from './HiddenCompaniesTable';
 import { useNotes } from '../hooks/useNotes';
+import { useHiddenCompanies } from '../hooks/useHiddenCompanies';
 
 const Popup: React.FC = () => {
   const [activeTab, setActiveTab] = useState('notes');
   const { notes, loading, deleteNote } = useNotes();
+  const { hiddenCompanies, loading: hiddenLoading, unhideCompany } = useHiddenCompanies();
 
   const renderContent = () => {
     switch (activeTab) {
@@ -18,6 +21,17 @@ const Popup: React.FC = () => {
               notes={notes} 
               loading={loading} 
               onDeleteNote={deleteNote} 
+            />
+          </div>
+        );
+      case 'hidden':
+        return (
+          <div>
+            <h2 className="mb-4">Hidden Companies</h2>
+            <HiddenCompaniesTable 
+              hiddenCompanies={hiddenCompanies} 
+              loading={hiddenLoading} 
+              onUnhideCompany={unhideCompany} 
             />
           </div>
         );

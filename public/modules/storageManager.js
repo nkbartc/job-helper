@@ -52,4 +52,49 @@ if (typeof updateNote === 'undefined') {
       });
     });
   }
-} 
+}
+
+if (typeof hideCompany === 'undefined') {
+  function hideCompany(companyName, reason = 'No reason provided') {
+    return new Promise((resolve) => {
+      chrome.storage.local.get(['hiddenCompanies'], (result) => {
+        const hiddenCompanies = result.hiddenCompanies || {};
+        const normalizedCompanyName = companyName.trim().toLowerCase();
+        hiddenCompanies[normalizedCompanyName] = {
+          reason: reason,
+          hiddenAt: new Date().toISOString()
+        };
+        chrome.storage.local.set({ hiddenCompanies }, () => {
+          resolve(hiddenCompanies);
+        });
+      });
+    });
+  }
+}
+
+if (typeof isCompanyHidden === 'undefined') {
+  function isCompanyHidden(companyName) {
+    return new Promise((resolve) => {
+      chrome.storage.local.get(['hiddenCompanies'], (result) => {
+        const hiddenCompanies = result.hiddenCompanies || {};
+        const normalizedCompanyName = companyName.trim().toLowerCase();
+        resolve(!!hiddenCompanies[normalizedCompanyName]);
+      });
+    });
+  }
+}
+
+if (typeof unhideCompany === 'undefined') {
+  function unhideCompany(companyName) {
+    return new Promise((resolve) => {
+      chrome.storage.local.get(['hiddenCompanies'], (result) => {
+        const hiddenCompanies = result.hiddenCompanies || {};
+        const normalizedCompanyName = companyName.trim().toLowerCase();
+        delete hiddenCompanies[normalizedCompanyName];
+        chrome.storage.local.set({ hiddenCompanies }, () => {
+          resolve(hiddenCompanies);
+        });
+      });
+    });
+  }
+}

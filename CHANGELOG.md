@@ -5,6 +5,61 @@ All notable changes to the Job Notes Saver Chrome Extension will be documented i
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-07-21
+
+### Added
+- **Hidden Companies Management**: Complete system for hiding unwanted companies from job listings
+  - "Hidden Companies" section in popup UI with dedicated navigation tab
+  - Hide/Unhide functionality with reason tracking and timestamps
+  - Automatic removal of hidden company job listings from LinkedIn Jobs pages
+  - Search and filter hidden companies by name or reason
+  - Bulk unhide capability from popup interface
+
+- **Enhanced Company Hiding Features**:
+  - Hide Company button on job detail pages with reason prompt
+  - Dynamic Hide/Unhide button state based on current company status
+  - Persistent storage using object-based structure with company metadata
+  - Real-time synchronization between LinkedIn pages and popup interface
+
+- **Performance Optimizations**:
+  - Replaced complex MutationObserver with interval-based monitoring
+  - Smart change detection to prevent unnecessary processing
+  - Immediate custom button updates on URL changes (500ms response time)
+  - Element processing markers to prevent duplicate operations
+
+### Fixed
+- **Stability Issues**:
+  - Resolved infinite loops and "shaking" behavior in highlight system
+  - Fixed memory usage spikes caused by excessive DOM monitoring
+  - Eliminated highlight toggle issues when navigating between pages
+  - Corrected custom button delays when switching job detail pages
+
+- **Data Synchronization**:
+  - Fixed hidden companies not immediately effective on job search pages
+  - Resolved highlight state inconsistencies during page navigation
+  - Improved initial data loading and processing reliability
+
+### Changed
+- **Storage Architecture**: Migrated hidden companies from array to object-based storage
+  - Key: normalized company name (lowercase, trimmed)
+  - Value: `{ reason: string, hiddenAt: timestamp }`
+
+- **Observer System**: Complete rewrite of content monitoring
+  - Interval-based checking (1000ms for general, 500ms for URL changes)
+  - Element count-based change detection for highlight operations
+  - URL change detection for immediate custom button updates
+
+- **UI Improvements**:
+  - Added company name color styling in notes table
+  - Enhanced table headers and column organization
+  - Improved popup navigation with 🙈 Hidden Companies icon
+
+### Technical Improvements
+- Modular function architecture with redefinition protection
+- Normalized company name handling across all operations
+- Enhanced error handling and console logging for debugging
+- Optimized DOM element selection and processing
+
 ## [0.2.1] - 2025-07-21
 
 ### Fixed

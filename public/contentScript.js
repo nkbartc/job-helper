@@ -2,6 +2,7 @@
 
 // Initialize extension
 chrome.storage.local.get(['jobNotes'], (result) => {
+  console.log('Job Notes Saver: Initializing with notes:', result.jobNotes);
   const notes = result.jobNotes || {};
   observeAndHighlight(notes);
 });
@@ -10,7 +11,10 @@ chrome.storage.local.get(['jobNotes'], (result) => {
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === 'ADD_JOB_NOTE' && msg.payload) {
     getNotes().then(notes => {
-      highlightMatchingCompanies(notes);
+      chrome.storage.local.get(['hiddenCompanies'], (result) => {
+        const hiddenCompanies = result.hiddenCompanies || {};
+        highlightMatchingCompanies(notes, null, hiddenCompanies);
+      });
     });
   }
 });
