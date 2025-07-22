@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Job Notes Saver",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Save and highlight job-related notes from job search websites.",
   "permissions": [
     "contextMenus",
