@@ -2,12 +2,6 @@ console.log('Job Notes Saver: Background script loaded');
 
 chrome.runtime.onInstalled.addListener(() => {
   console.log('Job Notes Saver: Extension installed');
-  chrome.contextMenus.create({
-    id: 'saveToJobNotes',
-    title: 'Save to Job Notes',
-    contexts: ['selection'],
-    documentUrlPatterns: ['https://www.linkedin.com/jobs/*'],
-  });
 });
 
 // Inject content scripts when tab is updated

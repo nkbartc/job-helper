@@ -1,10 +1,9 @@
 {
   "manifest_version": 3,
   "name": "Job Notes Saver",
-  "version": "0.3.0",
-  "description": "This is a Chrome extension that allows users to save notes for job postings, highlight company names that have existing notes, and manage all notes through a popup interface. Additionally, it provides a hidden companies feature that lets users hide unwanted companies from job listings and automatically removes those companies' job postings from job search pages.",
+  "version": "0.3.1",
+  "description": "Save notes for job postings, highlight companies with notes, and hide unwanted companies from LinkedIn job listings.",
   "permissions": [
-    "contextMenus",
     "storage",
     "activeTab",
     "scripting"

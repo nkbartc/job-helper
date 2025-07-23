@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 more cicd tests
 
+## [0.3.1] - 2025-07-23
+
+### Removed
+- **Context Menu Permission**: Removed `contextMenus` permission and related functionality
+  - Eliminated right-click context menu feature ("Save to Job Notes")
+  - Simplified extension permissions for better security and review process
+  - Reduced permission requirements for Google Extension Platform submission
+
+### Changed
+- **Permission Optimization**: Streamlined extension permissions
+  - Removed unused `contextMenus` permission from manifest.json
+  - Maintained core functionality with minimal required permissions
+  - Improved extension review approval chances
+
+### Technical Improvements
+- Cleaned up background script by removing context menu creation code
+- Updated manifest files in both `public/` and `build/` directories
+- Maintained all existing functionality (notes, company highlighting, hidden companies)
+
 ## [0.3.0] - 2025-07-21
 
 ### Added
