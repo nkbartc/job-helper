@@ -7,6 +7,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 more cicd tests
 
+## [0.3.2] - 2025-08-05
+
+### Performance Improvements
+- **Script Injection Optimization**: Implemented duplicate injection prevention
+  - Added injection tracking with Set to prevent multiple script injections
+  - Checks for existing scripts before injecting to avoid redundancy
+  - Clears tracking when tabs are removed or navigate away from LinkedIn
+
+- **DOM Monitoring Enhancement**: Replaced interval-based polling with MutationObserver
+  - Switched from 1000ms/500ms intervals to event-driven MutationObserver
+  - Added debouncing (300ms) to prevent excessive processing
+  - Implemented incremental updates using WeakSet to track processed elements
+  - Batch processing with requestAnimationFrame for better performance
+
+### Fixed
+- **Data Consistency Issues**:
+  - Fixed `saveNote` function only saving `createdAt` field, now preserves all note data
+  - Added proper data structure with all fields (companyName, jobTitle, note, createdAt, updatedAt)
+  - Improved data merging in `updateNote` to preserve existing fields
+
+- **Memory Leaks**:
+  - Added cleanup handlers in beforeunload event
+  - Properly disconnect MutationObservers on page unload
+  - Clear global variables and WeakSet references
+  - Remove message listeners when page unloads
+
+### Added
+- **Error Handling**: Comprehensive error handling across all modules
+  - Try-catch blocks for all async operations
+  - User-friendly error messages with alerts
+  - Proper promise rejection handling
+  - Chrome runtime error checking
+
+- **Performance Monitoring**:
+  - Console logging for debugging and monitoring
+  - Element count tracking for efficient processing
+  - Batch processing to avoid blocking main thread
+
+### Technical Improvements
+- **Code Quality**:
+  - Added proper TypeScript-style error handling patterns
+  - Improved DOM safety checks (isConnected, existence validation)
+  - Better separation of concerns between modules
+  - Consistent async/await patterns
+
+- **Optimization Details**:
+  - WeakSet for O(1) element tracking without memory leaks
+  - Batch processing in groups of 10 elements
+  - Smart DOM observation targeting specific mutations
+  - URL change detection via title element observation
+
 ## [0.3.1] - 2025-07-23
 
 ### Removed
