@@ -16,37 +16,69 @@ const Popup: React.FC = () => {
     switch (activeTab) {
       case 'notes':
         return (
-          <div>
-            <h2 className="mb-4">Job Notes</h2>
-            <NotesTable 
-              notes={notes} 
-              loading={loading} 
-              onDeleteNote={deleteNote} 
-            />
+          <div className="content-wrapper">
+            <div className="content-header">
+              <h2>Job Notes</h2>
+            </div>
+            <div className="content-body">
+              <NotesTable 
+                notes={notes} 
+                loading={loading} 
+                onDeleteNote={deleteNote} 
+              />
+            </div>
           </div>
         );
       case 'hidden':
         return (
-          <div>
-            <h2 className="mb-4">Hidden Companies</h2>
-            <HiddenCompaniesTable 
-              hiddenCompanies={hiddenCompanies} 
-              loading={hiddenLoading} 
-              onUnhideCompany={unhideCompany} 
-            />
+          <div className="content-wrapper">
+            <div className="content-header">
+              <h2>Hidden Companies</h2>
+            </div>
+            <div className="content-body">
+              <HiddenCompaniesTable 
+                hiddenCompanies={hiddenCompanies} 
+                loading={hiddenLoading} 
+                onUnhideCompany={unhideCompany} 
+              />
+            </div>
           </div>
         );
       case 'help':
-        return <HelpSection />;
+        return (
+          <div className="content-wrapper">
+            <div className="content-header">
+              <h2>Button Guide</h2>
+            </div>
+            <div className="content-body scrollable-content">
+              <HelpSection />
+            </div>
+          </div>
+        );
       case 'about':
-        return <AboutSection />;
+        return (
+          <div className="content-wrapper">
+            <div className="content-header">
+              <h2>About</h2>
+            </div>
+            <div className="content-body scrollable-content">
+              <AboutSection />
+            </div>
+          </div>
+        );
       default:
-        return <div>Select a tab from the sidebar</div>;
+        return (
+          <div className="content-wrapper">
+            <div className="content-body d-flex align-center justify-center">
+              <p className="text-muted">Select a tab from the sidebar</p>
+            </div>
+          </div>
+        );
     }
   };
 
   return (
-    <div className="d-flex h-100" style={{ overflow: 'hidden' }}>
+    <div className="app-container">
       <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
       <div className="main-content">
         {renderContent()}
@@ -55,4 +87,4 @@ const Popup: React.FC = () => {
   );
 };
 
-export default Popup; 
+export default Popup;

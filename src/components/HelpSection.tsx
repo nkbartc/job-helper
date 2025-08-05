@@ -43,45 +43,47 @@ const HelpSection: React.FC = () => {
   ];
 
   return (
-    <div>
-      <h2 className="mb-4">Button Guide</h2>
-      <p className="text-muted mb-4">
-        These buttons appear on LinkedIn job detail pages to help you manage your job search.
-      </p>
-      
-      <div className="row g-3">
-        {buttonHelps.map((help, index) => (
-          <div key={index} className="col-12">
-            <Card className="h-100 border-0 shadow-sm">
-              <Card.Body className="p-3">
-                <div className="d-flex align-items-start">
-                  <div className="me-3 mt-1">
-                    {help.icon}
+    <div className="help-container">
+      <div className="help-content">
+        <p className="text-muted mb-4">
+          These buttons appear on LinkedIn job detail pages to help you manage your job search.
+        </p>
+        
+        <div className="row g-3">
+          {buttonHelps.map((help, index) => (
+            <div key={index} className="col-12 help-item">
+              <Card className="card-custom border-0">
+                <Card.Body className="p-3">
+                  <div className="d-flex align-items-start">
+                    <div className="me-3 mt-1">
+                      {help.icon}
+                    </div>
+                    <div className="flex-grow-1">
+                      <h6 className="mb-2 fw-medium">{help.title}</h6>
+                      <p className="mb-2 text-muted fs-sm">{help.description}</p>
+                      <Badge className="badge-custom badge-light-custom fs-xs">
+                        {help.context}
+                      </Badge>
+                    </div>
                   </div>
-                  <div className="flex-grow-1">
-                    <h6 className="mb-2 fw-bold">{help.title}</h6>
-                    <p className="mb-2 text-muted small">{help.description}</p>
-                    <Badge bg="light" text="dark" className="small">
-                      {help.context}
-                    </Badge>
-                  </div>
-                </div>
-              </Card.Body>
-            </Card>
-          </div>
-        ))}
-      </div>
+                </Card.Body>
+              </Card>
+            </div>
+          ))}
+        </div>
 
-      <Card className="mt-4 bg-light border-0">
-        <Card.Body className="p-3">
-          <h6 className="mb-2">💡 Pro Tips</h6>
-          <ul className="small mb-0 ps-3">
-            <li>Applied timestamps help track your job search progress</li>
-            <li>Hidden companies won't show up in future searches</li>
-            <li>All data is stored locally - your privacy is protected</li>
-          </ul>
-        </Card.Body>
-      </Card>
+        <Card className="card-custom mt-4 border-0" style={{ background: 'var(--background-light)' }}>
+          <Card.Body className="p-3">
+            <h6 className="mb-2 fw-medium">💡 Pro Tips</h6>
+            <ul className="fs-sm mb-0 ps-3">
+              <li>Applied timestamps help track your job search progress</li>
+              <li>Hidden companies won't show up in future searches</li>
+              <li>All data is stored locally - your privacy is protected</li>
+              <li>Use the popup interface to manage all your notes and settings</li>
+            </ul>
+          </Card.Body>
+        </Card>
+      </div>
     </div>
   );
 };
