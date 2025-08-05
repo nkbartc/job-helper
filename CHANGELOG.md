@@ -10,192 +10,83 @@ more cicd tests
 ## [0.4.4] - 2025-08-05
 
 ### Added
-- **Expandable Row Design**: Revolutionary table UX for Notes and Hidden Companies
-  - Click-to-expand functionality for viewing full content without table width issues
-  - Compact main rows showing truncated content with expand/collapse indicators
-  - Smooth animated expansion with dedicated full-width editing areas
-  - ChevronRight/ChevronDown icons for clear visual expansion state
-  - Bootstrap Collapse component integration for smooth animations
+- **Expandable Row Design**: New table UX for Notes and Hidden Companies
+  - Click to expand/collapse rows for viewing full content
+  - Compact main rows with expand/collapse indicators
+  - Dedicated editing areas in expanded mode
 
-### Enhanced  
-- **Table Layout Optimization**: Fixed long text width expansion issues
-  - Strict column width control with `table-layout: fixed` CSS
-  - Maximum width constraints on all columns to prevent text overflow expansion
-  - Text truncation with ellipsis (...) for long content in collapsed state
+### Enhanced
+- **Table Layout**: Fixed long text width expansion issues
+  - Text truncation with ellipsis for long content
   - Hover tooltips showing full content when truncated
-  - Proper text overflow handling with `overflow: hidden` and `whiteSpace: nowrap`
+  - Consistent column widths regardless of content length
 
-- **Column Layout Improvements**: Optimized space allocation and visual hierarchy
-  - NotesTable: Swapped Note and Applied At positions for better content flow
-  - Adjusted column widths - Company Name: 35%, Note: 25%, Applied At: 20%, Actions: 20%
-  - HiddenCompaniesTable: Maintained optimal proportions with strict width limits
-  - Enhanced responsive design with proper minimum and maximum width constraints
+- **Column Layout**: Optimized space allocation
+  - Swapped Note and Applied At positions in Notes table for better flow
+  - Improved responsive design
 
-- **User Experience Enhancements**: Improved editing and interaction flows
-  - Larger editing areas (4 rows, 100px minimum height) in expanded mode
-  - Auto-expansion when starting edit mode, auto-collapse when canceling
-  - Better visual separation between collapsed and expanded content
+- **User Experience**: Better editing and interaction
+  - Larger editing areas in expanded mode
+  - Auto-expansion when editing, auto-collapse when canceling
   - Enhanced keyboard navigation (Enter to save, Escape to cancel)
-  - Consistent interaction patterns across both tables
-
-### Technical Improvements
-- **Advanced State Management**: Sophisticated expansion and editing coordination
-  - Separate state tracking for expanded rows and editing modes
-  - Intelligent auto-collapse during edit cancellation
-  - Conflict prevention between multiple simultaneous operations
-  - Clean state management with Set-based expansion tracking
-
-- **CSS Architecture Enhancement**: Robust table styling system
-  - Fixed table layout CSS for consistent column behavior
-  - Custom animations for smooth expand/collapse transitions
-  - Enhanced scrollbar styling for expanded content areas
-  - Responsive design improvements with proper breakpoint handling
-
-- **Performance Optimizations**: Efficient rendering and state updates
-  - Optimized re-rendering with proper React Fragment usage
-  - Efficient text truncation algorithms with configurable limits
-  - Smart event handling to prevent unnecessary state updates
-  - Memory-efficient expansion state management
 
 ### Fixed
-- **Table Width Issues**: Resolved long text causing column expansion
-  - Long company names and notes/reasons no longer break table layout
-  - Consistent column widths regardless of content length
-  - Proper text truncation in collapsed state with full content in expanded state
-  - Fixed table container overflow and horizontal scrolling issues
+- **Table Width Issues**: Long company names and notes no longer break table layout
 
 ## [0.4.3] - 2025-08-05
 
 ### Added
-- **Inline Editing for Notes and Hidden Companies**: Complete in-table editing functionality
-  - Click any note in Notes table to edit job application notes
-  - Click any reason in Hidden Companies table to edit hiding reasons
-  - Real-time editing with textarea input for multi-line content
-  - Save/Cancel buttons with visual feedback and keyboard shortcuts
-  - Hover effects and visual cues indicating editable fields
-  - Auto-focus and text selection for seamless editing experience
+- **Inline Editing**: Click-to-edit functionality for Notes and Hidden Companies
+  - Click any note or reason to edit in-place
+  - Save/Cancel buttons with keyboard shortcuts
+  - Auto-focus and visual feedback during editing
 
 ### Enhanced
-- **Improved User Experience**: Streamlined data management workflow
+- **User Experience**: Streamlined data management
   - No need to navigate away from tables to edit content
-  - Immediate visual feedback during editing process
-  - Consistent editing interface across both Notes and Hidden Companies tables
-  - Empty fields show helpful placeholder text encouraging user interaction
-
-### Technical Improvements
-- **Data Persistence**: Robust localStorage integration for all edits
-  - `updateNote()` function in useNotes hook for job note modifications
-  - `updateReason()` function in useHiddenCompanies hook for hiding reason updates
-  - Automatic data reloading after updates to maintain UI consistency
-  - Proper error handling and state management during edit operations
-
-- **Component Architecture Enhancement**:
-  - Enhanced NotesTable with inline editing state management
-  - Enhanced HiddenCompaniesTable with reason editing capabilities
-  - Keyboard navigation support (Enter to save, Escape to cancel)
-  - Responsive textarea with resize functionality and minimum height
-  - Proper TypeScript interfaces for new callback functions
-
-- **State Management**: Sophisticated editing state tracking
-  - Individual edit states per table row to prevent conflicts
-  - Clean state reset after save/cancel operations
-  - Optimistic UI updates with fallback error handling
+  - Consistent editing interface across both tables
 
 ## [0.4.2] - 2025-08-05
 
 ### Enhanced
-- **Delete Note Confirmation**: Improved delete confirmation dialog
-  - Replaced browser `confirm()` with custom modal dialog matching Hide Company style
-  - Beautiful confirmation modal with "Delete" and "Cancel" buttons
-  - Red-colored Delete button to indicate destructive action
+- **Delete Note Confirmation**: Custom modal dialog
+  - Replaced browser `confirm()` with styled confirmation modal
+  - Consistent design with Hide Company modal
   - Keyboard support (Enter to confirm, Escape to cancel)
-  - Consistent design with existing custom modal system
-  - No text input required - simple yes/no confirmation
 
-- **CSS Architecture Overhaul**: Unified styling system for popup interface
-  - Created comprehensive CSS design system with variables and components
-  - Migrated from inline styles to CSS classes for better maintainability
-  - Improved visual consistency across all components
+- **CSS Architecture**: Unified styling system
+  - Created comprehensive design system with CSS variables
+  - Improved visual consistency across components
   - Enhanced scrolling behavior in Help and About sections
 
-- **Enhanced About Section**: Redesigned with interactive elements
-  - Added GitHub and Privacy Policy links with hover effects
-  - Comprehensive privacy features showcase with checkmarks
-  - Professional developer profile display with enhanced styling
-  - Interactive link cards with smooth hover animations
+- **About Section**: Redesigned with interactive elements
+  - Added GitHub and Privacy Policy links
+  - Privacy features showcase with checkmarks
 
-- **Improved Help Section**: Better organization and visual hierarchy
-  - Fixed scrolling issues with proper container structure
-  - Added Pro Tips section with additional usage guidance
-  - Enhanced card design with consistent spacing and typography
-  - Better mobile responsiveness and layout optimization
-
-### Technical Improvements
-- **Custom Modal System Enhancement**:
-  - Added `showCustomConfirm()` function to `customModal.js`
-  - Promise-based confirmation dialog with boolean return (true/false)
-  - Consistent styling and animations with existing modal system
-  - Automatic focus management and accessibility improvements
-  - Made both `showCustomPrompt` and `showCustomConfirm` globally available
-
-- **CSS System Architecture**:
-  - `src/styles/variables.css` - CSS custom properties for colors, spacing, typography
-  - `src/styles/components.css` - Reusable component styles and layouts
-  - Unified design tokens across all React components
-  - Responsive breakpoints and accessibility improvements
-
-- **Component Structure Enhancement**:
-  - Proper content wrapper hierarchy for consistent layouts
-  - Scrollable content containers with custom scrollbar styling
-  - Better focus management and keyboard navigation
-  - Improved semantic HTML structure for accessibility
-
-- **UI/UX Consistency**: All confirmation dialogs now use the same design language
-  - Hide Company: Custom prompt with text input for reason
-  - Delete Note: Custom confirmation with simple yes/no choice
-  - Fallback to browser dialogs if custom modals unavailable
+- **Help Section**: Better organization
+  - Fixed scrolling issues
+  - Added Pro Tips section
 
 ## [0.4.1] - 2025-08-05
 
 ### Added
-- **Toast Notification System**: Modern notification system replacing browser alerts
-  - Elegant slide-in animations from top-right corner
-  - Color-coded notifications: Success (green), Error (red), Info (blue), Warning (yellow)
-  - Auto-dismiss after 3 seconds with smooth fade-out animation
-  - Non-intrusive positioning that doesn't interfere with LinkedIn UI
+- **Toast Notification System**: Modern notifications replacing browser alerts
+  - Color-coded notifications (Success, Error, Info, Warning)
+  - Auto-dismiss after 3 seconds
+  - Non-intrusive positioning
 
-- **Custom Modal Dialog**: Beautiful prompt replacement for Hide Company functionality
-  - Modern design with rounded corners, shadows, and smooth animations
-  - Centered modal with semi-transparent backdrop
-  - Keyboard support (Enter to confirm, Escape to cancel)
-  - Input field with focus states and hover effects
-  - Responsive design adapting to different screen sizes
+- **Custom Modal Dialog**: Styled prompt for Hide Company
+  - Modern design with keyboard support
+  - Responsive and accessible
 
-- **Help Section**: Comprehensive button guide in React popup
-  - New "❓ Help" tab in sidebar navigation
-  - Visual icon representations for each button type
-  - Clear descriptions of when each button appears and what it does
-  - Context badges explaining button availability
-  - Pro tips section with usage recommendations
+- **Help Section**: Button guide in popup
+  - New "❓ Help" tab with visual icons
+  - Clear descriptions and usage tips
 
 ### Enhanced
-- **Button Feedback**: All LinkedIn page buttons now show immediate feedback
-  - "Add Applied Time" → Success toast: "Applied time added successfully!"
-  - "Update Applied Time" → Success toast: "Applied time updated successfully!"
-  - "Delete Note" → Success toast: "Note deleted successfully!"
-  - "Hide Company" → Custom modal + Success toast: "Company hidden successfully!"
-  - "Unhide Company" → Success toast: "Company unhidden successfully!"
-  - Error states show red error toasts with helpful messages
-
-### Technical Improvements
-- **New Modules**:
-  - `toastNotification.js` - Toast system with CSS animations and DOM management
-  - `customModal.js` - Promise-based modal dialog system
-  - `HelpSection.tsx` - React component with Bootstrap styling
-
-- **Fallback Support**: Maintains backward compatibility with browser alerts if toast system fails
-- **Memory Management**: Automatic cleanup of toast containers and modal elements
-- **Animation Performance**: CSS transforms and opacity for smooth 60fps animations
+- **Button Feedback**: All LinkedIn buttons show immediate feedback
+  - Success/error toasts for all actions
+  - Better user experience with visual confirmation
 
 ## [0.4.0] - 2025-08-05
 
