@@ -10,28 +10,15 @@ more cicd tests
 ## [0.4.4] - 2025-08-05
 
 ### Added
-- **Expandable Row Design**: New table UX for Notes and Hidden Companies
-  - Click to expand/collapse rows for viewing full content
-  - Compact main rows with expand/collapse indicators
+- **Expandable Row Design**: Click to expand/collapse rows for viewing full content
   - Dedicated editing areas in expanded mode
 
 ### Enhanced
-- **Table Layout**: Fixed long text width expansion issues
-  - Text truncation with ellipsis for long content
-  - Hover tooltips showing full content when truncated
-  - Consistent column widths regardless of content length
-
-- **Column Layout**: Optimized space allocation
-  - Swapped Note and Applied At positions in Notes table for better flow
-  - Improved responsive design
-
-- **User Experience**: Better editing and interaction
-  - Larger editing areas in expanded mode
-  - Auto-expansion when editing, auto-collapse when canceling
-  - Enhanced keyboard navigation (Enter to save, Escape to cancel)
+- **Table Layout**: Fixed long text breaking table width
+- **User Experience**: Larger editing areas and better keyboard navigation
 
 ### Fixed
-- **Table Width Issues**: Long company names and notes no longer break table layout
+- **Table Width Issues**: Long text no longer breaks table layout
 
 ## [0.4.3] - 2025-08-05
 
@@ -49,44 +36,20 @@ more cicd tests
 ## [0.4.2] - 2025-08-05
 
 ### Enhanced
-- **Delete Note Confirmation**: Custom modal dialog
-  - Replaced browser `confirm()` with styled confirmation modal
-  - Consistent design with Hide Company modal
-  - Keyboard support (Enter to confirm, Escape to cancel)
-
-- **CSS Architecture**: Unified styling system
-  - Created comprehensive design system with CSS variables
-  - Improved visual consistency across components
-  - Enhanced scrolling behavior in Help and About sections
-
-- **About Section**: Redesigned with interactive elements
-  - Added GitHub and Privacy Policy links
-  - Privacy features showcase with checkmarks
-
-- **Help Section**: Better organization
-  - Fixed scrolling issues
-  - Added Pro Tips section
+- **Delete Note Confirmation**: Custom modal dialog with keyboard support
+- **UI Improvements**: Unified styling and better visual consistency
+- **About Section**: Added GitHub and Privacy Policy links
+- **Help Section**: Fixed scrolling and added Pro Tips
 
 ## [0.4.1] - 2025-08-05
 
 ### Added
 - **Toast Notification System**: Modern notifications replacing browser alerts
-  - Color-coded notifications (Success, Error, Info, Warning)
-  - Auto-dismiss after 3 seconds
-  - Non-intrusive positioning
-
 - **Custom Modal Dialog**: Styled prompt for Hide Company
-  - Modern design with keyboard support
-  - Responsive and accessible
-
-- **Help Section**: Button guide in popup
-  - New "❓ Help" tab with visual icons
-  - Clear descriptions and usage tips
+- **Help Section**: Button guide with visual icons and usage tips
 
 ### Enhanced
-- **Button Feedback**: All LinkedIn buttons show immediate feedback
-  - Success/error toasts for all actions
-  - Better user experience with visual confirmation
+- **Button Feedback**: All LinkedIn buttons show immediate feedback with toasts
 
 ## [0.4.0] - 2025-08-05
 
