@@ -9,8 +9,8 @@ import { useHiddenCompanies } from '../hooks/useHiddenCompanies';
 
 const Popup: React.FC = () => {
   const [activeTab, setActiveTab] = useState('notes');
-  const { notes, loading, deleteNote } = useNotes();
-  const { hiddenCompanies, loading: hiddenLoading, unhideCompany } = useHiddenCompanies();
+  const { notes, loading, deleteNote, updateNote } = useNotes();
+  const { hiddenCompanies, loading: hiddenLoading, unhideCompany, updateReason } = useHiddenCompanies();
 
   const renderContent = () => {
     switch (activeTab) {
@@ -24,7 +24,8 @@ const Popup: React.FC = () => {
               <NotesTable 
                 notes={notes} 
                 loading={loading} 
-                onDeleteNote={deleteNote} 
+                onDeleteNote={deleteNote}
+                onUpdateNote={updateNote}
               />
             </div>
           </div>
@@ -39,7 +40,8 @@ const Popup: React.FC = () => {
               <HiddenCompaniesTable 
                 hiddenCompanies={hiddenCompanies} 
                 loading={hiddenLoading} 
-                onUnhideCompany={unhideCompany} 
+                onUnhideCompany={unhideCompany}
+                onUpdateReason={updateReason}
               />
             </div>
           </div>

@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 more cicd tests
 
+## [0.4.3] - 2025-08-05
+
+### Added
+- **Inline Editing for Notes and Hidden Companies**: Complete in-table editing functionality
+  - Click any note in Notes table to edit job application notes
+  - Click any reason in Hidden Companies table to edit hiding reasons
+  - Real-time editing with textarea input for multi-line content
+  - Save/Cancel buttons with visual feedback and keyboard shortcuts
+  - Hover effects and visual cues indicating editable fields
+  - Auto-focus and text selection for seamless editing experience
+
+### Enhanced
+- **Improved User Experience**: Streamlined data management workflow
+  - No need to navigate away from tables to edit content
+  - Immediate visual feedback during editing process
+  - Consistent editing interface across both Notes and Hidden Companies tables
+  - Empty fields show helpful placeholder text encouraging user interaction
+
+### Technical Improvements
+- **Data Persistence**: Robust localStorage integration for all edits
+  - `updateNote()` function in useNotes hook for job note modifications
+  - `updateReason()` function in useHiddenCompanies hook for hiding reason updates
+  - Automatic data reloading after updates to maintain UI consistency
+  - Proper error handling and state management during edit operations
+
+- **Component Architecture Enhancement**:
+  - Enhanced NotesTable with inline editing state management
+  - Enhanced HiddenCompaniesTable with reason editing capabilities
+  - Keyboard navigation support (Enter to save, Escape to cancel)
+  - Responsive textarea with resize functionality and minimum height
+  - Proper TypeScript interfaces for new callback functions
+
+- **State Management**: Sophisticated editing state tracking
+  - Individual edit states per table row to prevent conflicts
+  - Clean state reset after save/cancel operations
+  - Optimistic UI updates with fallback error handling
+
 ## [0.4.2] - 2025-08-05
 
 ### Enhanced

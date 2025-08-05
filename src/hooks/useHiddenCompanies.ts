@@ -50,6 +50,28 @@ export const useHiddenCompanies = () => {
     }
   };
 
+  const updateReason = async (companyName: string, reason: string) => {
+    try {
+      const result = await chrome.storage.local.get(['hiddenCompanies']);
+      const hiddenCompaniesObject = result.hiddenCompanies || {};
+      const normalizedCompanyName = companyName.trim().toLowerCase();
+      
+      if (hiddenCompaniesObject[normalizedCompanyName]) {
+        // Update existing entry
+        hiddenCompaniesObject[normalizedCompanyName] = {
+          ...hiddenCompaniesObject[normalizedCompanyName],
+          reason: reason.trim(),
+          updatedAt: new Date().toISOString()
+        };
+        
+        await chrome.storage.local.set({ hiddenCompanies: hiddenCompaniesObject });
+        await loadHiddenCompanies(); // Reload to refresh the display
+      }
+    } catch (error) {
+      console.error('Error updating company reason:', error);
+    }
+  };
+
   useEffect(() => {
     loadHiddenCompanies();
   }, []);
@@ -58,6 +80,7 @@ export const useHiddenCompanies = () => {
     hiddenCompanies,
     loading,
     unhideCompany,
+    updateReason,
     loadHiddenCompanies
   };
 }; 

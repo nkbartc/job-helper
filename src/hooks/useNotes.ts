@@ -44,6 +44,35 @@ export const useNotes = () => {
     }
   };
 
+  const updateNote = async (companyName: string, note: string) => {
+    try {
+      const result = await chrome.storage.local.get(['jobNotes']);
+      const notesData = result.jobNotes || {};
+      
+      if (notesData[companyName]) {
+        // Update existing note
+        notesData[companyName] = {
+          ...notesData[companyName],
+          note: note.trim(),
+          updatedAt: new Date().toISOString()
+        };
+      } else {
+        // Create new note if doesn't exist
+        notesData[companyName] = {
+          companyName,
+          createdAt: new Date().toISOString(),
+          note: note.trim(),
+          updatedAt: new Date().toISOString()
+        };
+      }
+      
+      await chrome.storage.local.set({ jobNotes: notesData });
+      await loadNotes(); // Reload the notes
+    } catch (error) {
+      console.error('Error updating note:', error);
+    }
+  };
+
   useEffect(() => {
     loadNotes();
   }, []);
@@ -52,6 +81,7 @@ export const useNotes = () => {
     notes,
     loading,
     deleteNote,
+    updateNote,
     loadNotes
   };
 }; 

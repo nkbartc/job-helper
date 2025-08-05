@@ -12,14 +12,18 @@ interface HiddenCompaniesTableProps {
   hiddenCompanies: HiddenCompany[];
   loading: boolean;
   onUnhideCompany: (companyName: string) => void;
+  onUpdateReason: (companyName: string, reason: string) => void;
 }
 
 const HiddenCompaniesTable: React.FC<HiddenCompaniesTableProps> = ({ 
   hiddenCompanies, 
   loading, 
-  onUnhideCompany 
+  onUnhideCompany,
+  onUpdateReason 
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [editingReason, setEditingReason] = useState<string | null>(null);
+  const [editValue, setEditValue] = useState('');
 
   // Filter companies based on search term
   const filteredCompanies = useMemo(() => {
@@ -30,6 +34,31 @@ const HiddenCompaniesTable: React.FC<HiddenCompaniesTableProps> = ({
       company.reason.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [hiddenCompanies, searchTerm]);
+
+  const handleEditStart = (companyName: string, currentReason: string) => {
+    setEditingReason(companyName);
+    setEditValue(currentReason || '');
+  };
+
+  const handleEditSave = (companyName: string) => {
+    onUpdateReason(companyName, editValue);
+    setEditingReason(null);
+    setEditValue('');
+  };
+
+  const handleEditCancel = () => {
+    setEditingReason(null);
+    setEditValue('');
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent, companyName: string) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleEditSave(companyName);
+    } else if (e.key === 'Escape') {
+      handleEditCancel();
+    }
+  };
 
   if (loading) {
     return (
@@ -118,7 +147,65 @@ const HiddenCompaniesTable: React.FC<HiddenCompaniesTableProps> = ({
                       {company.companyName}
                     </span>
                   </td>
-                  <td>{company.reason}</td>
+                  <td>
+                    {editingReason === company.companyName ? (
+                      <div className="d-flex gap-2">
+                        <Form.Control
+                          as="textarea"
+                          rows={2}
+                          value={editValue}
+                          onChange={(e) => setEditValue(e.target.value)}
+                          onKeyDown={(e) => handleKeyPress(e, company.companyName)}
+                          placeholder="Enter reason..."
+                          style={{ resize: 'vertical', minHeight: '60px' }}
+                          autoFocus
+                        />
+                        <div className="d-flex flex-column gap-1">
+                          <Button
+                            variant="success"
+                            size="sm"
+                            onClick={() => handleEditSave(company.companyName)}
+                            title="Save (Enter)"
+                            style={{ whiteSpace: 'nowrap' }}
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            variant="secondary"
+                            size="sm"
+                            onClick={handleEditCancel}
+                            title="Cancel (Esc)"
+                            style={{ whiteSpace: 'nowrap' }}
+                          >
+                            Cancel
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div
+                        className="position-relative"
+                        style={{ 
+                          cursor: 'pointer',
+                          minHeight: '24px',
+                          padding: '4px 8px',
+                          borderRadius: '4px',
+                          transition: 'background-color 0.2s ease'
+                        }}
+                        onClick={() => handleEditStart(company.companyName, company.reason)}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = '#f8f9fa';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = 'transparent';
+                        }}
+                        title="Click to edit reason"
+                      >
+                        {company.reason || (
+                          <span className="text-muted">Click to add reason...</span>
+                        )}
+                      </div>
+                    )}
+                  </td>
                   <td style={{ whiteSpace: 'nowrap' }}>{formatDate(company.hiddenAt)}</td>
                   <td style={{ whiteSpace: 'nowrap' }}>
                     <Button
