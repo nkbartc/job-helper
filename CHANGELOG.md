@@ -7,6 +7,63 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 more cicd tests
 
+## [0.4.4] - 2025-08-05
+
+### Added
+- **Expandable Row Design**: Revolutionary table UX for Notes and Hidden Companies
+  - Click-to-expand functionality for viewing full content without table width issues
+  - Compact main rows showing truncated content with expand/collapse indicators
+  - Smooth animated expansion with dedicated full-width editing areas
+  - ChevronRight/ChevronDown icons for clear visual expansion state
+  - Bootstrap Collapse component integration for smooth animations
+
+### Enhanced  
+- **Table Layout Optimization**: Fixed long text width expansion issues
+  - Strict column width control with `table-layout: fixed` CSS
+  - Maximum width constraints on all columns to prevent text overflow expansion
+  - Text truncation with ellipsis (...) for long content in collapsed state
+  - Hover tooltips showing full content when truncated
+  - Proper text overflow handling with `overflow: hidden` and `whiteSpace: nowrap`
+
+- **Column Layout Improvements**: Optimized space allocation and visual hierarchy
+  - NotesTable: Swapped Note and Applied At positions for better content flow
+  - Adjusted column widths - Company Name: 35%, Note: 25%, Applied At: 20%, Actions: 20%
+  - HiddenCompaniesTable: Maintained optimal proportions with strict width limits
+  - Enhanced responsive design with proper minimum and maximum width constraints
+
+- **User Experience Enhancements**: Improved editing and interaction flows
+  - Larger editing areas (4 rows, 100px minimum height) in expanded mode
+  - Auto-expansion when starting edit mode, auto-collapse when canceling
+  - Better visual separation between collapsed and expanded content
+  - Enhanced keyboard navigation (Enter to save, Escape to cancel)
+  - Consistent interaction patterns across both tables
+
+### Technical Improvements
+- **Advanced State Management**: Sophisticated expansion and editing coordination
+  - Separate state tracking for expanded rows and editing modes
+  - Intelligent auto-collapse during edit cancellation
+  - Conflict prevention between multiple simultaneous operations
+  - Clean state management with Set-based expansion tracking
+
+- **CSS Architecture Enhancement**: Robust table styling system
+  - Fixed table layout CSS for consistent column behavior
+  - Custom animations for smooth expand/collapse transitions
+  - Enhanced scrollbar styling for expanded content areas
+  - Responsive design improvements with proper breakpoint handling
+
+- **Performance Optimizations**: Efficient rendering and state updates
+  - Optimized re-rendering with proper React Fragment usage
+  - Efficient text truncation algorithms with configurable limits
+  - Smart event handling to prevent unnecessary state updates
+  - Memory-efficient expansion state management
+
+### Fixed
+- **Table Width Issues**: Resolved long text causing column expansion
+  - Long company names and notes/reasons no longer break table layout
+  - Consistent column widths regardless of content length
+  - Proper text truncation in collapsed state with full content in expanded state
+  - Fixed table container overflow and horizontal scrolling issues
+
 ## [0.4.3] - 2025-08-05
 
 ### Added

@@ -169,12 +169,16 @@
 .table-container {
   max-height: 400px;
   overflow-y: auto;
+  overflow-x: auto;
   border: 1px solid var(--border-light);
   border-radius: var(--border-radius);
+  min-width: 700px; /* Ensure minimum width for proper column display */
 }
 
 .table-custom {
   margin-bottom: 0;
+  table-layout: fixed; /* Force strict column width control */
+  width: 100%;
 }
 
 .table-custom th {
@@ -196,6 +200,42 @@
 
 .table-custom tbody tr:hover {
   background: var(--background-light);
+}
+
+/* Enhanced table styling for better readability */
+.table-custom td {
+  vertical-align: top; /* Align content to top for multi-line text */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Expandable row styling */
+.table-custom tbody tr td[colspan] {
+  background-color: transparent !important;
+  border-top: none !important;
+}
+
+.table-custom .collapse.show {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive table improvements */
+@media (max-width: 768px) {
+  .table-container {
+    min-width: 600px;
+    font-size: 0.9rem;
+  }
 }
 
 /* Button Components */
