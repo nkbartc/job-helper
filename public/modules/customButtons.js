@@ -46,7 +46,17 @@ if (typeof insertCustomButton === 'undefined') {
         deleteBtn.style.marginLeft = '8px';
         deleteBtn.onclick = async () => {
           try {
-            if (confirm('Are you sure you want to delete this note?')) {
+            let shouldDelete;
+            if (typeof showCustomConfirm !== 'undefined') {
+              shouldDelete = await showCustomConfirm(
+                'Delete Note',
+                `Are you sure you want to delete the note for "${existingNote.companyName}"?`
+              );
+            } else {
+              shouldDelete = confirm('Are you sure you want to delete this note?');
+            }
+            
+            if (shouldDelete) {
               await deleteNote(existingNote.companyName);
               console.log('Job Notes Saver: Note deleted successfully');
               if (typeof showSuccessToast !== 'undefined') {

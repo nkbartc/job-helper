@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 more cicd tests
 
+## [0.4.2] - 2025-08-05
+
+### Enhanced
+- **Delete Note Confirmation**: Improved delete confirmation dialog
+  - Replaced browser `confirm()` with custom modal dialog matching Hide Company style
+  - Beautiful confirmation modal with "Delete" and "Cancel" buttons
+  - Red-colored Delete button to indicate destructive action
+  - Keyboard support (Enter to confirm, Escape to cancel)
+  - Consistent design with existing custom modal system
+  - No text input required - simple yes/no confirmation
+
+### Technical Improvements
+- **Custom Modal System Enhancement**:
+  - Added `showCustomConfirm()` function to `customModal.js`
+  - Promise-based confirmation dialog with boolean return (true/false)
+  - Consistent styling and animations with existing modal system
+  - Automatic focus management and accessibility improvements
+  - Made both `showCustomPrompt` and `showCustomConfirm` globally available
+
+- **UI/UX Consistency**: All confirmation dialogs now use the same design language
+  - Hide Company: Custom prompt with text input for reason
+  - Delete Note: Custom confirmation with simple yes/no choice
+  - Fallback to browser dialogs if custom modals unavailable
+
 ## [0.4.1] - 2025-08-05
 
 ### Added

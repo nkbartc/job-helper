@@ -160,4 +160,149 @@ if (typeof showCustomPrompt === 'undefined') {
       });
     });
   }
+
+  // Create and show custom confirmation modal (simple yes/no)
+  function showCustomConfirm(title, message) {
+    return new Promise((resolve) => {
+      // Create overlay
+      const overlay = document.createElement('div');
+      overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 20000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      `;
+
+      // Create modal
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        max-width: 400px;
+        width: 90%;
+        padding: 0;
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
+      `;
+
+      // Create modal content
+      modal.innerHTML = `
+        <div style="padding: 24px 24px 20px 24px;">
+          <h3 style="margin: 0; font-size: 18px; font-weight: 600; color: #212529;">${title}</h3>
+          <p style="margin: 12px 0 0 0; font-size: 14px; color: #6c757d; line-height: 1.5;">${message}</p>
+        </div>
+        <div style="padding: 0 24px 24px 24px; display: flex; gap: 12px; justify-content: flex-end;">
+          <button id="custom-confirm-cancel" 
+                  style="padding: 12px 24px; border: 1px solid #dee2e6; background: white; 
+                         border-radius: 6px; font-size: 14px; font-weight: 500; color: #6c757d;
+                         cursor: pointer; transition: all 0.2s ease;">
+            Cancel
+          </button>
+          <button id="custom-confirm-ok" 
+                  style="padding: 12px 24px; border: none; background: #dc3545; color: white;
+                         border-radius: 6px; font-size: 14px; font-weight: 500;
+                         cursor: pointer; transition: all 0.2s ease;">
+            Delete
+          </button>
+        </div>
+      `;
+
+      overlay.appendChild(modal);
+      document.body.appendChild(overlay);
+
+      // Get elements
+      const cancelBtn = modal.querySelector('#custom-confirm-cancel');
+      const okBtn = modal.querySelector('#custom-confirm-ok');
+
+      // Add hover effects
+      const addHoverEffect = (btn, hoverStyle, normalStyle) => {
+        btn.addEventListener('mouseenter', () => {
+          Object.assign(btn.style, hoverStyle);
+        });
+        btn.addEventListener('mouseleave', () => {
+          Object.assign(btn.style, normalStyle);
+        });
+      };
+
+      addHoverEffect(cancelBtn, 
+        { backgroundColor: '#f8f9fa', borderColor: '#adb5bd' },
+        { backgroundColor: 'white', borderColor: '#dee2e6' }
+      );
+
+      addHoverEffect(okBtn,
+        { backgroundColor: '#c82333' },
+        { backgroundColor: '#dc3545' }
+      );
+
+      // Handle actions
+      const handleOk = () => {
+        closeModal();
+        resolve(true);
+      };
+
+      const handleCancel = () => {
+        closeModal();
+        resolve(false);
+      };
+
+      const closeModal = () => {
+        overlay.style.opacity = '0';
+        modal.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+          if (document.body.contains(overlay)) {
+            document.body.removeChild(overlay);
+          }
+        }, 300);
+      };
+
+      // Event listeners
+      okBtn.addEventListener('click', handleOk);
+      cancelBtn.addEventListener('click', handleCancel);
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', function keyHandler(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          handleOk();
+          document.removeEventListener('keydown', keyHandler);
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          handleCancel();
+          document.removeEventListener('keydown', keyHandler);
+        }
+      });
+
+      // Close on overlay click
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          handleCancel();
+        }
+      });
+
+      // Animate in
+      requestAnimationFrame(() => {
+        overlay.style.opacity = '1';
+        modal.style.transform = 'scale(1)';
+      });
+
+      // Focus the cancel button by default
+      setTimeout(() => {
+        cancelBtn.focus();
+      }, 100);
+    });
+  }
+
+  // Make functions globally available
+  window.showCustomPrompt = showCustomPrompt;
+  window.showCustomConfirm = showCustomConfirm;
 }
