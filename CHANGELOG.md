@@ -7,7 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 more cicd tests
 
-## [0.3.2] - 2025-08-05
+## [0.4.1] - 2025-08-05
+
+### Added
+- **Toast Notification System**: Modern notification system replacing browser alerts
+  - Elegant slide-in animations from top-right corner
+  - Color-coded notifications: Success (green), Error (red), Info (blue), Warning (yellow)
+  - Auto-dismiss after 3 seconds with smooth fade-out animation
+  - Non-intrusive positioning that doesn't interfere with LinkedIn UI
+
+- **Custom Modal Dialog**: Beautiful prompt replacement for Hide Company functionality
+  - Modern design with rounded corners, shadows, and smooth animations
+  - Centered modal with semi-transparent backdrop
+  - Keyboard support (Enter to confirm, Escape to cancel)
+  - Input field with focus states and hover effects
+  - Responsive design adapting to different screen sizes
+
+- **Help Section**: Comprehensive button guide in React popup
+  - New "❓ Help" tab in sidebar navigation
+  - Visual icon representations for each button type
+  - Clear descriptions of when each button appears and what it does
+  - Context badges explaining button availability
+  - Pro tips section with usage recommendations
+
+### Enhanced
+- **Button Feedback**: All LinkedIn page buttons now show immediate feedback
+  - "Add Applied Time" → Success toast: "Applied time added successfully!"
+  - "Update Applied Time" → Success toast: "Applied time updated successfully!"
+  - "Delete Note" → Success toast: "Note deleted successfully!"
+  - "Hide Company" → Custom modal + Success toast: "Company hidden successfully!"
+  - "Unhide Company" → Success toast: "Company unhidden successfully!"
+  - Error states show red error toasts with helpful messages
+
+### Technical Improvements
+- **New Modules**:
+  - `toastNotification.js` - Toast system with CSS animations and DOM management
+  - `customModal.js` - Promise-based modal dialog system
+  - `HelpSection.tsx` - React component with Bootstrap styling
+
+- **Fallback Support**: Maintains backward compatibility with browser alerts if toast system fails
+- **Memory Management**: Automatic cleanup of toast containers and modal elements
+- **Animation Performance**: CSS transforms and opacity for smooth 60fps animations
+
+## [0.4.0] - 2025-08-05
 
 ### Performance Improvements
 - **Script Injection Optimization**: Implemented duplicate injection prevention

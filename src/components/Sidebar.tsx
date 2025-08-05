@@ -15,6 +15,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
   const tabs: TabItem[] = [
     { id: 'notes', icon: '📝', label: 'Notes' },
     { id: 'hidden', icon: '🙈', label: 'Hidden Companies' },
+    { id: 'help', icon: '❓', label: 'Help' },
     { id: 'about', icon: 'ℹ️', label: 'About' }
   ];
 

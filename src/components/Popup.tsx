@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import NotesTable from './NotesTable';
 import AboutSection from './AboutSection';
+import HelpSection from './HelpSection';
 import HiddenCompaniesTable from './HiddenCompaniesTable';
 import { useNotes } from '../hooks/useNotes';
 import { useHiddenCompanies } from '../hooks/useHiddenCompanies';
@@ -35,6 +36,8 @@ const Popup: React.FC = () => {
             />
           </div>
         );
+      case 'help':
+        return <HelpSection />;
       case 'about':
         return <AboutSection />;
       default:

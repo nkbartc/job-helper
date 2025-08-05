@@ -26,9 +26,16 @@ if (typeof insertCustomButton === 'undefined') {
           try {
             await updateNote(existingNote.companyName, { createdAt: new Date().toISOString() });
             console.log('Job Notes Saver: Note updated successfully');
+            if (typeof showSuccessToast !== 'undefined') {
+              showSuccessToast('Applied time updated successfully!');
+            }
           } catch (error) {
             console.error('Job Notes Saver: Error updating note:', error);
-            alert('Failed to update note. Please try again.');
+            if (typeof showErrorToast !== 'undefined') {
+              showErrorToast('Failed to update note. Please try again.');
+            } else {
+              alert('Failed to update note. Please try again.');
+            }
           }
         };
         actionBar.appendChild(updateBtn);
@@ -42,10 +49,17 @@ if (typeof insertCustomButton === 'undefined') {
             if (confirm('Are you sure you want to delete this note?')) {
               await deleteNote(existingNote.companyName);
               console.log('Job Notes Saver: Note deleted successfully');
+              if (typeof showSuccessToast !== 'undefined') {
+                showSuccessToast('Note deleted successfully!');
+              }
             }
           } catch (error) {
             console.error('Job Notes Saver: Error deleting note:', error);
-            alert('Failed to delete note. Please try again.');
+            if (typeof showErrorToast !== 'undefined') {
+              showErrorToast('Failed to delete note. Please try again.');
+            } else {
+              alert('Failed to delete note. Please try again.');
+            }
           }
         };
         actionBar.appendChild(deleteBtn);
@@ -60,9 +74,16 @@ if (typeof insertCustomButton === 'undefined') {
           try {
             await updateNote(companyName, { createdAt: new Date().toISOString() });
             console.log('Job Notes Saver: Note added successfully');
+            if (typeof showSuccessToast !== 'undefined') {
+              showSuccessToast('Applied time added successfully!');
+            }
           } catch (error) {
             console.error('Job Notes Saver: Error adding note:', error);
-            alert('Failed to add note. Please try again.');
+            if (typeof showErrorToast !== 'undefined') {
+              showErrorToast('Failed to add note. Please try again.');
+            } else {
+              alert('Failed to add note. Please try again.');
+            }
           }
         };
         actionBar.appendChild(addBtn);
@@ -78,15 +99,33 @@ if (typeof insertCustomButton === 'undefined') {
         hideBtn.textContent = 'Hide Company';
         hideBtn.onclick = async () => {
           try {
-            const reason = prompt('Why do you want to hide this company?', 'Not interested');
+            let reason;
+            if (typeof showCustomPrompt !== 'undefined') {
+              reason = await showCustomPrompt(
+                'Hide Company',
+                `Hide all jobs from "${companyName}" in future searches?`,
+                'Enter reason (optional)',
+                'Not interested'
+              );
+            } else {
+              reason = prompt('Why do you want to hide this company?', 'Not interested');
+            }
+            
             if (reason !== null) {
               await hideCompany(companyName, reason);
               setupUnhideButton();
               console.log('Job Notes Saver: Company hidden successfully');
+              if (typeof showSuccessToast !== 'undefined') {
+                showSuccessToast('Company hidden successfully!');
+              }
             }
           } catch (error) {
             console.error('Job Notes Saver: Error hiding company:', error);
-            alert('Failed to hide company. Please try again.');
+            if (typeof showErrorToast !== 'undefined') {
+              showErrorToast('Failed to hide company. Please try again.');
+            } else {
+              alert('Failed to hide company. Please try again.');
+            }
           }
         };
       };
@@ -99,9 +138,16 @@ if (typeof insertCustomButton === 'undefined') {
             await unhideCompany(companyName);
             setupHideButton();
             console.log('Job Notes Saver: Company unhidden successfully');
+            if (typeof showSuccessToast !== 'undefined') {
+              showSuccessToast('Company unhidden successfully!');
+            }
           } catch (error) {
             console.error('Job Notes Saver: Error unhiding company:', error);
-            alert('Failed to unhide company. Please try again.');
+            if (typeof showErrorToast !== 'undefined') {
+              showErrorToast('Failed to unhide company. Please try again.');
+            } else {
+              alert('Failed to unhide company. Please try again.');
+            }
           }
         };
       };

@@ -33,6 +33,8 @@ async function injectScripts(tabId) {
       files: [
         'modules/storageManager.js',
         'modules/companyHighlight.js',
+        'modules/toastNotification.js',
+        'modules/customModal.js',
         'modules/customButtons.js',
         'modules/observerManager.js',
         'contentScript.js'
