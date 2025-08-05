@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Job Notes Saver",
-  "version": "0.4.1",
+  "version": "0.4.4",
   "description": "Save notes for job postings, highlight companies with notes, and hide unwanted companies from LinkedIn job listings.",
   "permissions": [
     "storage",
